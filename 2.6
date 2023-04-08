@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+    frontend:
+      image: dockermann1/frontend
+      ports:
+        - 5000:5000
+    backend:
+      image: dockermann1/backend
+      ports:
+        - 8080:8080
+      environment:
+        - REDIS_HOST=redis
+        - POSTGRES_HOST=postgres
+        - POSTGRES_PASSWORD=testi
+    redis:
+      image: redis
+    postgres:
+      image: postgres
+      restart: unless-stopped
+      environment:
+        - POSTGRES_PASSWORD=testi

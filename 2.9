@@ -1,0 +1,57 @@
+I changed environment variables in frontend/backend Dockerfiles as
+seen below and rebuilt the images.
+
+
+#frontend
+FROM node:16
+WORKDIR /usr/src/app
+EXPOSE 5000
+ENV REACT_APP_BACKEND_URL=http://localhost/api
+COPY . .
+RUN npm install && npm run build
+RUN npm install -g serve
+CMD ["serve", "-s", "-l", "5000", "build"]
+
+#backend
+FROM golang:1.16
+WORKDIR /usr/src/app
+ENV REQUEST_ORIGIN=http://localhost
+EXPOSE 8080
+COPY . .
+RUN go build
+CMD ["./server"]
+
+#docker-compose.yml
+version: '3.8'
+
+services:
+    frontend:
+      image: dockermann1/frontend
+      ports:
+        - 5000:5000
+    backend:
+      image: dockermann1/backend
+      ports:
+        - 8080:8080
+      environment:
+        - REDIS_HOST=redis
+        - POSTGRES_HOST=postgres
+        - POSTGRES_PASSWORD=testi
+      volumes:
+        - ./database:/var/lib/postgresql/data
+    redis:
+      image: redis
+    postgres:
+      image: postgres
+      restart: unless-stopped
+      environment:
+        - POSTGRES_PASSWORD=testi
+      volumes:
+        - ./database:/var/lib/postgresql/data
+    nginx:
+      image: nginx
+      ports:
+        - 80:80
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+

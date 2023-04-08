@@ -1,0 +1,48 @@
+tj@desktop:~/docker/course2/2.1$ cat docker-compose.yml 
+version: '3.8'
+
+services:
+
+    exercise_2.1:
+      image: devopsdockeruh/simple-web-service
+      build: .
+      volumes:
+        - ./text.log:/usr/src/app/text.log
+
+
+tj@desktop:~/docker/course2/2.1$ touch text.log
+
+tj@desktop:~/docker/course2/2.1$ docker compose run exercise_2.1 
+Starting log output
+Wrote text to /usr/src/app/text.log
+Wrote text to /usr/src/app/text.log
+
+^Ctj@desktop:~/docker/course2/2.1$ ls
+docker-compose.yml  text.log
+
+tj@desktop:~/docker/course2/2.1$ cat text.log 
+2023-04-06 17:52:56 +0000 UTC
+2023-04-06 17:52:58 +0000 UTC
+
+tj@desktop:~/docker/course2/2.1$ docker compose up
+[+] Running 1/1
+ ⠿ Container 21-exercise_2.1-1  Created                                                         0.1s
+Attaching to 21-exercise_2.1-1
+21-exercise_2.1-1  | Starting log output
+21-exercise_2.1-1  | Wrote text to /usr/src/app/text.log
+21-exercise_2.1-1  | Wrote text to /usr/src/app/text.log
+21-exercise_2.1-1  | Wrote text to /usr/src/app/text.log
+21-exercise_2.1-1  | Wrote text to /usr/src/app/text.log
+^CGracefully stopping... (press Ctrl+C again to force)
+Aborting on container exit...
+[+] Running 1/1
+ ⠿ Container 21-exercise_2.1-1  Stopped                                                         0.2s
+canceled
+
+tj@desktop:~/docker/course2/2.1$ cat text.log 
+2023-04-06 17:52:56 +0000 UTC
+2023-04-06 17:52:58 +0000 UTC
+2023-04-06 17:53:34 +0000 UTC
+2023-04-06 17:53:36 +0000 UTC
+2023-04-06 17:53:38 +0000 UTC
+2023-04-06 17:53:40 +0000 UTC

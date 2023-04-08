@@ -1,0 +1,23 @@
+tj@desktop:~/docker/course2/2.2$ cat docker-compose.yml 
+version: '3.8'
+
+services:
+    web:
+      image: devopsdockeruh/simple-web-service
+      ports:
+        - 8080:8080
+      command: server
+
+tj@desktop:~/docker/course2/2.2$ docker compose up
+[+] Running 1/1
+ ⠿ Container 22-web-1  Recreated                                           0.2s
+Attaching to 22-web-1
+22-web-1  | [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+22-web-1  | 
+22-web-1  | [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+22-web-1  |  - using env:	export GIN_MODE=release
+22-web-1  |  - using code:	gin.SetMode(gin.ReleaseMode)
+22-web-1  | 
+22-web-1  | [GIN-debug] GET    /*path                    --> server.Start.func1 (3 handlers)
+22-web-1  | [GIN-debug] Listening and serving HTTP on :8080
+22-web-1  | [GIN] 2023/04/07 - 07:25:06 | 200 |      66.657µs |      172.19.0.1 | GET      "/"
